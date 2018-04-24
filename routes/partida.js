@@ -56,15 +56,15 @@ module.exports = app => {
     });
   });
 
-  app.put('/usuarios/:idUsuario', (req, res) => {
+  app.put('/partidas/:idPartida', (req, res) => {
     const userData = {
-      idUsuario: req.params.idUsuario,
+      idPartida: req.params.idPartida,
         
-      userName: req.body.userName,
-      correo: req.body.correo,
-      contraseña:req.body.contrasena,
-      genero:req.body.genero,
-      fechaNacimiento: req.body.fechaNacimiento,
+      idSala: req.body.idSala,
+      numJugadores: req.body.numJugadores,
+      costoCarta:req.body.costoCarta,
+      horaInicio:req.body.horaInicio,
+      horaFin: req.body.horaFin,
       estado: req.body.estado
    
     };

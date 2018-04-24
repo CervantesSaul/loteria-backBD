@@ -26,7 +26,10 @@ app.use((req,res,next)=>{
 //RUTAS
 require('./routes/user')(app);
 require('./routes/tipopremio')(app);
+require('./routes/sala')(app);
 require('./routes/premio')(app);
+require('./routes/perdedor')(app);
+require('./routes/partida')(app);
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
