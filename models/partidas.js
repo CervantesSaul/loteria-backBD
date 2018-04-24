@@ -10,9 +10,9 @@ connection = mysql.createConnection({
 
 let userModel = {};
 
-userModel.getUsuario = (id,callback) => {
+userModel.getPartida = (id,callback) => {
     if (connection) {
-      connection.query('SELECT * from usuario WHERE idUsuario='+ connection.escape(id),
+      connection.query('SELECT * from partida WHERE idPartida='+ connection.escape(id),
         (err, rows) => {
           if (err) {
             throw err
@@ -26,9 +26,9 @@ userModel.getUsuario = (id,callback) => {
     }
   };
 
-userModel.getUsuarios = (callback) => {
+userModel.getPartidas = (callback) => {
     if (connection) {
-      connection.query('SELECT * FROM usuario ORDER BY idUsuario',
+      connection.query('SELECT * FROM partida ORDER BY idPartida',
         (err, rows) => {
           if (err) {
             throw err
@@ -42,9 +42,9 @@ userModel.getUsuarios = (callback) => {
     }
   };
 
-  userModel.contarUsuarios = (callback) => {
+  userModel.contarPartidas = (callback) => {
     if (connection) {
-      connection.query('SELECT idUsuario FROM usuario order by idUsuario DESC LIMIT 1',
+      connection.query('SELECT idPartida FROM partida order by idPartida DESC LIMIT 1',
         (err, rows) => {
           if (err) {
             throw err
@@ -58,10 +58,10 @@ userModel.getUsuarios = (callback) => {
     }
   };
 
-userModel.insertUser = (  userData, callback) => {
+userModel.insertPartida = (  userData, callback) => {
     try {
       if (connection) {
-        connection.query('INSERT INTO usuario SET ?', userData,
+        connection.query('INSERT INTO partida SET ?', userData,
           (err, result) => {
             if (err) {
               //throw err;
@@ -77,19 +77,19 @@ userModel.insertUser = (  userData, callback) => {
     }
   };
 
-  userModel.updateUsuario = (userData, callback) => {
+  userModel.updatePartida = (userData, callback) => {
     if (connection) {
       const sql = `
-        UPDATE usuario SET
+        UPDATE partida SET
   
-        userName = ${connection.escape(userData.userName)},
-        correo = ${connection.escape(userData.correo)},
-        genero = ${connection.escape(userData.genero)},
-        fechaNacimiento = ${connection.escape(userData.fechaNacimiento)},
-        estado = ${connection.escape(userData.estado)},
-        contraseña = ${connection.escape(userData.contraseña)}
+        idSala = ${connection.escape(userData.idSala)},
+        numJugadores = ${connection.escape(userData.numJugadores)},
+        costoCarta = ${connection.escape(userData.costoCarta)},
+        horaInicio = ${connection.escape(userData.horaInicio)},
+        horaFin = ${connection.escape(userData.horaFin)},
+        estado = ${connection.escape(userData.estado)}
        
-        WHERE idUsuario = ${userData.idUsuario}`;
+        WHERE idPartida = ${userData.idPartida}`;
   
       connection.query(sql, function (err, result) {
         if (err) {

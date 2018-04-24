@@ -1,45 +1,45 @@
-const UserModel = require('../models/users');
+const UserModel = require('../models/partidas');
 
 module.exports = app => {
 
-  app.get('/usuarios/:idUsuario', (req, res) => {
-    var idUsuario = req.params.idUsuario;
-    UserModel.getUsuario(idUsuario,(err, data) => {
+  app.get('/partidas/:idPartida', (req, res) => {
+    var idPartida = req.params.idPartida;
+    UserModel.getPartida(idPartida,(err, data) => {
         res.status(200).json(data);
         
   
       });
   });
 
-  app.get('/usuarios', (req, res) => {
-    UserModel.getUsuarios((err, data) => {
+  app.get('/partidas', (req, res) => {
+    UserModel.getPartidas((err, data) => {
       res.status(200).json(data);
     });
   });
 
-  app.get('/usuarios/contar', (req, res) => {
-    UserModel.contarUsuarios((err, data) => {
+  app.get('/partidas/contar', (req, res) => {
+    UserModel.contarPartidas((err, data) => {
       res.status(200).json(data);
     });
   });
 
-  app.post('/usuarios', (req, res) => {
+  app.post('/partidas', (req, res) => {
     var userData = {
-      idUsuario: req.body.idUsuario,
-      userName: req.body.userName,
-      correo: req.body.correo,
-      contraseña:req.body.contrasena,
-      genero:req.body.genero,
-      fechaNacimiento: req.body.fechaNacimiento,
+      idPartida: req.body.idPartida,
+      idSala: req.body.idSala,
+      numJugadores: req.body.numJugadores,
+      costoCarta:req.body.costoCarta,
+      horaInicio:req.body.horaInicio,
+      horaFin: req.body.horaFin,
       estado: req.body.estado
     };
    
-    UserModel.insertUser(userData, (err, data) => {
+    UserModel.insertPartidas(userData, (err, data) => {
     try {
       if (data && data.insertId) {
         res.status(200).json({
           success: true,
-          msg: "Inserted a new user",
+          msg: "Inserted a new partida",
           data: data
         });
         // res.redirect('/users/' + data.insertId);

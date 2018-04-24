@@ -10,9 +10,9 @@ connection = mysql.createConnection({
 
 let userModel = {};
 
-userModel.getUsuario = (id,callback) => {
+userModel.getPerdedor = (id,callback) => {
     if (connection) {
-      connection.query('SELECT * from usuario WHERE idUsuario='+ connection.escape(id),
+      connection.query('SELECT * from perdedor WHERE idUsuario='+ connection.escape(id),
         (err, rows) => {
           if (err) {
             throw err
@@ -26,9 +26,9 @@ userModel.getUsuario = (id,callback) => {
     }
   };
 
-userModel.getUsuarios = (callback) => {
+userModel.getPerdedores = (callback) => {
     if (connection) {
-      connection.query('SELECT * FROM usuario ORDER BY idUsuario',
+      connection.query('SELECT * FROM perdedor ORDER BY idUsuario',
         (err, rows) => {
           if (err) {
             throw err
@@ -44,7 +44,7 @@ userModel.getUsuarios = (callback) => {
 
   userModel.contarUsuarios = (callback) => {
     if (connection) {
-      connection.query('SELECT idUsuario FROM usuario order by idUsuario DESC LIMIT 1',
+      connection.query('SELECT count(idPerdedor) FROM perdedor order by idPerdedor DESC LIMIT 1',
         (err, rows) => {
           if (err) {
             throw err
@@ -58,10 +58,10 @@ userModel.getUsuarios = (callback) => {
     }
   };
 
-userModel.insertUser = (  userData, callback) => {
+userModel.insertPerdedor = (  userData, callback) => {
     try {
       if (connection) {
-        connection.query('INSERT INTO usuario SET ?', userData,
+        connection.query('INSERT INTO perdedor SET ?', userData,
           (err, result) => {
             if (err) {
               //throw err;
@@ -77,17 +77,15 @@ userModel.insertUser = (  userData, callback) => {
     }
   };
 
-  userModel.updateUsuario = (userData, callback) => {
+
+  //no sirve el update en este caso ya que la tabla tiene solo dos campos y son primarykey compuesta
+  userModel.updatePerdedor = (userData, callback) => {
     if (connection) {
       const sql = `
-        UPDATE usuario SET
+        UPDATE perdedor SET
   
         userName = ${connection.escape(userData.userName)},
         correo = ${connection.escape(userData.correo)},
-        genero = ${connection.escape(userData.genero)},
-        fechaNacimiento = ${connection.escape(userData.fechaNacimiento)},
-        estado = ${connection.escape(userData.estado)},
-        contraseña = ${connection.escape(userData.contraseña)}
        
         WHERE idUsuario = ${userData.idUsuario}`;
   

@@ -1,45 +1,40 @@
-const UserModel = require('../models/users');
+const UserModel = require('../models/tipopremios');
 
 module.exports = app => {
 
-  app.get('/usuarios/:idUsuario', (req, res) => {
-    var idUsuario = req.params.idUsuario;
-    UserModel.getUsuario(idUsuario,(err, data) => {
+  app.get('/tipoPremios/:idPremio', (req, res) => {
+    var idPremio = req.params.idPremio;
+    UserModel.getUsuario(idPremio,(err, data) => {
         res.status(200).json(data);
         
   
       });
   });
 
-  app.get('/usuarios', (req, res) => {
+  app.get('/tipoPremios', (req, res) => {
     UserModel.getUsuarios((err, data) => {
       res.status(200).json(data);
     });
   });
 
-  app.get('/usuarios/contar', (req, res) => {
+  app.get('/tipoPremios/contar', (req, res) => {
     UserModel.contarUsuarios((err, data) => {
       res.status(200).json(data);
     });
   });
 
-  app.post('/usuarios', (req, res) => {
+  app.post('/tipoPremios', (req, res) => {
     var userData = {
-      idUsuario: req.body.idUsuario,
-      userName: req.body.userName,
-      correo: req.body.correo,
-      contraseña:req.body.contrasena,
-      genero:req.body.genero,
-      fechaNacimiento: req.body.fechaNacimiento,
-      estado: req.body.estado
+      idPremio: req.body.idPremio,
+      descripcion: req.body.descripcion
     };
    
-    UserModel.insertUser(userData, (err, data) => {
+    UserModel.insertTipoPremio(userData, (err, data) => {
     try {
       if (data && data.insertId) {
         res.status(200).json({
           success: true,
-          msg: "Inserted a new user",
+          msg: "Inserted a new tipoPremio",
           data: data
         });
         // res.redirect('/users/' + data.insertId);
@@ -56,16 +51,11 @@ module.exports = app => {
     });
   });
 
-  app.put('/usuarios/:idUsuario', (req, res) => {
+  app.put('/tipoPremios/:idPremio', (req, res) => {
     const userData = {
-      idUsuario: req.params.idUsuario,
+      idPremio: req.params.idPremio,
         
-      userName: req.body.userName,
-      correo: req.body.correo,
-      contraseña:req.body.contrasena,
-      genero:req.body.genero,
-      fechaNacimiento: req.body.fechaNacimiento,
-      estado: req.body.estado
+      descripcion: req.body.descripcion
    
     };
     UserModel.updateUsuario(userData, function (err, data) {

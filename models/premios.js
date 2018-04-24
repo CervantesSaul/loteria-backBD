@@ -10,9 +10,9 @@ connection = mysql.createConnection({
 
 let userModel = {};
 
-userModel.getUsuario = (id,callback) => {
+userModel.getPremio = (id,callback) => {
     if (connection) {
-      connection.query('SELECT * from usuario WHERE idUsuario='+ connection.escape(id),
+      connection.query('SELECT * from premio WHERE idPremio='+ connection.escape(id),
         (err, rows) => {
           if (err) {
             throw err
@@ -26,9 +26,9 @@ userModel.getUsuario = (id,callback) => {
     }
   };
 
-userModel.getUsuarios = (callback) => {
+userModel.getPremios = (callback) => {
     if (connection) {
-      connection.query('SELECT * FROM usuario ORDER BY idUsuario',
+      connection.query('SELECT * FROM premios ORDER BY idPremio',
         (err, rows) => {
           if (err) {
             throw err
@@ -42,9 +42,9 @@ userModel.getUsuarios = (callback) => {
     }
   };
 
-  userModel.contarUsuarios = (callback) => {
+  userModel.contarPremios = (callback) => {
     if (connection) {
-      connection.query('SELECT idUsuario FROM usuario order by idUsuario DESC LIMIT 1',
+      connection.query('SELECT idPremio FROM premio order by idPremio DESC LIMIT 1',
         (err, rows) => {
           if (err) {
             throw err
@@ -58,10 +58,10 @@ userModel.getUsuarios = (callback) => {
     }
   };
 
-userModel.insertUser = (  userData, callback) => {
+userModel.insertPremio = (  userData, callback) => {
     try {
       if (connection) {
-        connection.query('INSERT INTO usuario SET ?', userData,
+        connection.query('INSERT INTO premio SET ?', userData,
           (err, result) => {
             if (err) {
               //throw err;
@@ -77,19 +77,14 @@ userModel.insertUser = (  userData, callback) => {
     }
   };
 
-  userModel.updateUsuario = (userData, callback) => {
+  userModel.updatePremio = (userData, callback) => {
     if (connection) {
       const sql = `
-        UPDATE usuario SET
+        UPDATE premio SET
   
-        userName = ${connection.escape(userData.userName)},
-        correo = ${connection.escape(userData.correo)},
-        genero = ${connection.escape(userData.genero)},
-        fechaNacimiento = ${connection.escape(userData.fechaNacimiento)},
-        estado = ${connection.escape(userData.estado)},
-        contraseña = ${connection.escape(userData.contraseña)}
+        porcentaje = ${connection.escape(userData.porcentaje)}
        
-        WHERE idUsuario = ${userData.idUsuario}`;
+        WHERE idPremio = ${userData.idPremio} AND idPartida = ${userData.idPartida}`;
   
       connection.query(sql, function (err, result) {
         if (err) {
