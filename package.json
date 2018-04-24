@@ -1,0 +1,30 @@
+{
+  "name": "bd-loteria",
+  "version": "1.0.0",
+  "description": "Backend de la bd",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manuelruelas/loteria-backBD.git"
+  },
+  "author": "4-01",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/manuelruelas/loteria-backBD/issues"
+  },
+  "homepage": "https://github.com/manuelruelas/loteria-backBD#readme",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
