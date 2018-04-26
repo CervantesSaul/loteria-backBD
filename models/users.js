@@ -74,7 +74,7 @@ userModel.getUsuarios = (callback) => {
             console.log(err);
           }
           else {
-           
+            console.log(rows);
             callback(null, rows);
           }
         }
@@ -86,21 +86,21 @@ userModel.getUsuarios = (callback) => {
   userModel.contarUsuarios = (callback) => {
     createConnection();
     conectar();
-    if (connection) {
-      connection.query('SELECT idUsuario FROM usuario order by idUsuario DESC LIMIT 1',
-        (err, rows) => {
-          if (err) {
-            console.log(err);
+      if (connection) {
+        connection.query('SELECT count(idUsuario) as Usuarios FROM usuario order by idUsuario DESC LIMIT 1',
+          (err, rows) => {
+            if (err) {
+              console.log(err);
+            }
+            else {
+              console.log(rows);
+              callback(null, rows);
+            }
           }
-          else {
-           
-            callback(null, rows);
-          }
-        }
-      )
-    }
-    connection.end();
-  };
+        )
+      }
+      connection.end();
+    };
 
 userModel.insertUser = (  userData, callback) => {
 
