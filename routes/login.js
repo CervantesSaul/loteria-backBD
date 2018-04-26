@@ -46,6 +46,8 @@ module.exports = function (server) {
     server.post('/usuario/login', (req, res) => {
                 var userName= req.body.userName;
         var contraseña = req.body.contrasena;
+        user.createConnection();
+        user.conectar()
         db.query('SELECT * FROM usuario WHERE userName = ?',[userName], function (error, results, fields) {
         if (error) {
           res.send({
@@ -78,7 +80,7 @@ module.exports = function (server) {
           }
         }
         });
-
+        db.end();
     })
 
 }

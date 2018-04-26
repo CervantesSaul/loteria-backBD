@@ -25,7 +25,11 @@ module.exports = app => {
 
   app.get('/usuarios/contar', (req, res) => {
     UserModel.contarUsuarios((err, data) => {
-      res.status(200).json(data);
+      if (error){
+        res.status(500).json(data);
+      }else{
+        res.status(200).json(data);
+      }
     });
   });
 
@@ -76,13 +80,14 @@ module.exports = app => {
    
     };
     UserModel.updateUsuario(userData, function (err, data) {
-      if (data && data.msg) {
-        res.status(200).json({data});
-      } else {
+      if (err) {
         res.status(500).json({
           success: false,
           msg: 'Error'
         });
+      } else {
+       
+        res.status(200).json({data});
       }
     });
   });
