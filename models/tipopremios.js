@@ -11,7 +11,8 @@ connection = mysql.createConnection({
 let userModel = {};
 
 userModel.getTipoPremio = (id,callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT * from tipopremios WHERE idPremio='+ connection.escape(id),
         (err, rows) => {
           if (err) {
@@ -23,11 +24,15 @@ userModel.getTipoPremio = (id,callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
 userModel.getTipoPremios = (callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT * FROM tipopremios ORDER BY idPremio',
         (err, rows) => {
           if (err) {
@@ -39,11 +44,15 @@ userModel.getTipoPremios = (callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
   userModel.contarTipoPremios = (callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT idPremio FROM tipopremio order by idPremio DESC LIMIT 1',
         (err, rows) => {
           if (err) {
@@ -55,6 +64,9 @@ userModel.getTipoPremios = (callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
@@ -72,13 +84,15 @@ userModel.insertTipoPremio = (  userData, callback) => {
         )
       }
     
-    } catch (error) {
-      
+    }catch(error){}
+    finally{
+      connection.end();
     }
   };
 
   userModel.updateTipoPremio = (userData, callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       const sql = `
         UPDATE tipopremio SET
   
@@ -95,6 +109,9 @@ userModel.insertTipoPremio = (  userData, callback) => {
           })
         }
       });
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 

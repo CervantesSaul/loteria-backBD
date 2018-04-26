@@ -17,6 +17,12 @@ module.exports = app => {
     });
   });
 
+  app.get('/usuarios2', (req, res) => {
+    UserModel.getUsuarios2((err, data) => {
+      res.status(200).json(data);
+    });
+  });
+
   app.get('/usuarios/contar', (req, res) => {
     UserModel.contarUsuarios((err, data) => {
       res.status(200).json(data);
@@ -36,17 +42,18 @@ module.exports = app => {
    
     UserModel.insertUser(userData, (err, data) => {
     try {
-      if (data && data.insertId) {
+      if (error) {
+        res.status(500).json({
+          success: false,
+          msg: "Error"
+        });
+        // res.redirect('/users/' + data.insertId);
+      } else {
+        
         res.status(200).json({
           success: true,
           msg: "Inserted a new user",
           data: data
-        });
-        // res.redirect('/users/' + data.insertId);
-      } else {
-        res.status(500).json({
-          success: false,
-          msg: "Error"
         });
       }
     } catch (error) {

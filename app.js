@@ -24,6 +24,7 @@ app.use((req,res,next)=>{
 });
 
 //RUTAS
+require('./routes/login')(app);
 require('./routes/user')(app);
 require('./routes/tipopremio')(app);
 require('./routes/sala')(app);

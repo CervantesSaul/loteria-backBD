@@ -11,7 +11,8 @@ connection = mysql.createConnection({
 let userModel = {};
 
 userModel.getSala = (id,callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT * from sala WHERE idSala='+ connection.escape(id),
         (err, rows) => {
           if (err) {
@@ -23,11 +24,15 @@ userModel.getSala = (id,callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
 userModel.getSalas = (callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT * FROM sala ORDER BY idSala',
         (err, rows) => {
           if (err) {
@@ -39,11 +44,15 @@ userModel.getSalas = (callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
   userModel.contarSalas = (callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT Count(idSalas) FROM sala order by idSala DESC LIMIT 1',
         (err, rows) => {
           if (err) {
@@ -55,6 +64,9 @@ userModel.getSalas = (callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
@@ -72,13 +84,15 @@ userModel.insertSala = (  userData, callback) => {
         )
       }
     
-    } catch (error) {
-      
+    }catch(error){}
+    finally{
+      connection.end();
     }
   };
 
   userModel.updateSala = (userData, callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       const sql = `
         UPDATE sala SET
   
@@ -99,6 +113,9 @@ userModel.insertSala = (  userData, callback) => {
           })
         }
       });
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 

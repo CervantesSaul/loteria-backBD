@@ -11,7 +11,8 @@ connection = mysql.createConnection({
 let userModel = {};
 
 userModel.getPremio = (id,callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT * from premio WHERE idPremio='+ connection.escape(id),
         (err, rows) => {
           if (err) {
@@ -23,11 +24,15 @@ userModel.getPremio = (id,callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
 userModel.getPremios = (callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT * FROM premios ORDER BY idPremio',
         (err, rows) => {
           if (err) {
@@ -39,11 +44,15 @@ userModel.getPremios = (callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
   userModel.contarPremios = (callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       connection.query('SELECT idPremio FROM premio order by idPremio DESC LIMIT 1',
         (err, rows) => {
           if (err) {
@@ -55,6 +64,9 @@ userModel.getPremios = (callback) => {
           }
         }
       )
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 
@@ -72,13 +84,15 @@ userModel.insertPremio = (  userData, callback) => {
         )
       }
     
-    } catch (error) {
-      
+    }catch(error){}
+    finally{
+      connection.end();
     }
   };
 
   userModel.updatePremio = (userData, callback) => {
-    if (connection) {
+    try{
+      if (connection) {
       const sql = `
         UPDATE premio SET
   
@@ -95,6 +109,9 @@ userModel.insertPremio = (  userData, callback) => {
           })
         }
       });
+    }}catch(error){}
+    finally{
+      connection.end();
     }
   };
 

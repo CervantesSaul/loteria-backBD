@@ -1,21 +1,58 @@
 const mysql = require('mysql');
 
-connection = mysql.createConnection({
-  host: 'sql165.main-hosting.eu',
-  user: 'u541737295_azu',
-  password: '12345678',
-  database: 'u541737295_lote',
-  port: 3306
-});
-
+var connection;
 let userModel = {};
+function createConnection(){
+  connection = mysql.createConnection({
+    host: 'sql165.main-hosting.eu',
+    user: 'u541737295_azu',
+    password: '12345678',
+    database: 'u541737295_lote',
+    port: 3306
+  });
+}
+
+function conectar(){
+  connection.connect(function(error){
+    if(error){
+      console.log(error);
+    }else{
+      console.log('Conexion correcta.');
+    }
+  });
+}
+
+userModel.getUsuarios2 = (callback) => {
+  createConnection();
+  conectar();
+  if (connection) {
+    connection.query('SELECT * FROM usuario ORDER BY idUsuario',
+      (err, rows) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+         
+          callback(null, rows);
+        }
+      }
+    )
+  }
+
+  connection.end();
+};
+
+
+
 
 userModel.getUsuario = (id,callback) => {
+    createConnection();
+    conectar();
     if (connection) {
       connection.query('SELECT * from usuario WHERE idUsuario='+ connection.escape(id),
         (err, rows) => {
           if (err) {
-            throw err
+            console.log(err);
           }
           else {
            
@@ -24,14 +61,17 @@ userModel.getUsuario = (id,callback) => {
         }
       )
     }
+    connection.end();
   };
 
 userModel.getUsuarios = (callback) => {
+  createConnection();
+  conectar();
     if (connection) {
       connection.query('SELECT * FROM usuario ORDER BY idUsuario',
         (err, rows) => {
           if (err) {
-            throw err
+            console.log(err);
           }
           else {
            
@@ -40,14 +80,17 @@ userModel.getUsuarios = (callback) => {
         }
       )
     }
+    connection.end();
   };
 
   userModel.contarUsuarios = (callback) => {
+    createConnection();
+    conectar();
     if (connection) {
       connection.query('SELECT idUsuario FROM usuario order by idUsuario DESC LIMIT 1',
         (err, rows) => {
           if (err) {
-            throw err
+            console.log(err);
           }
           else {
            
@@ -56,21 +99,27 @@ userModel.getUsuarios = (callback) => {
         }
       )
     }
+    connection.end();
   };
 
 userModel.insertUser = (  userData, callback) => {
+
     try {
+      createConnection();
+      conectar();
+
       if (connection) {
         connection.query('INSERT INTO usuario SET ?', userData,
           (err, result) => {
             if (err) {
-              //throw err;
+              console.log(err);
             } else {
               callback(null, {'insertId': result.insertId})
             }
           }
         )
       }
+      connection.end();
     
     } catch (error) {
       
@@ -78,6 +127,8 @@ userModel.insertUser = (  userData, callback) => {
   };
 
   userModel.updateUsuario = (userData, callback) => {
+    createConnection();
+    conectar();
     if (connection) {
       const sql = `
         UPDATE usuario SET
@@ -101,6 +152,7 @@ userModel.insertUser = (  userData, callback) => {
         }
       });
     }
+    connection.end();
   };
 
   module.exports = userModel;
