@@ -17,7 +17,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/partidas/contar', (req, res) => {
+  app.get('/partidasContar', (req, res) => {
     UserModel.contarPartidas((err, data) => {
       res.status(200).json(data);
     });

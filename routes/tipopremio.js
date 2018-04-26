@@ -17,8 +17,8 @@ module.exports = app => {
     });
   });
 
-  app.get('/tipoPremios/contar', (req, res) => {
-    UserModel.contarUsuarios((err, data) => {
+  app.get('/tipoPremiosContar', (req, res) => {
+    UserModel.contarTipoPremios((err, data) => {
       res.status(200).json(data);
     });
   });

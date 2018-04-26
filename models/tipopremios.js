@@ -1,17 +1,31 @@
 const mysql = require('mysql');
 
-connection = mysql.createConnection({
-  host: 'sql165.main-hosting.eu',
-  user: 'u541737295_azu',
-  password: '12345678',
-  database: 'u541737295_lote',
-  port: 3306
-});
-
+var connection;
 let userModel = {};
+function createConnection(){
+  connection = mysql.createConnection({
+    host: 'sql165.main-hosting.eu',
+    user: 'u541737295_azu',
+    password: '12345678',
+    database: 'u541737295_lote',
+    port: 3306
+  });
+}
+
+function conectar(){
+  connection.connect(function(error){
+    if(error){
+      console.log(error);
+    }else{
+      console.log('Conexion correcta.');
+    }
+  });
+}
 
 userModel.getTipoPremio = (id,callback) => {
     try{
+      createConnection();
+      conectar();
       if (connection) {
       connection.query('SELECT * from tipopremios WHERE idPremio='+ connection.escape(id),
         (err, rows) => {
@@ -32,6 +46,8 @@ userModel.getTipoPremio = (id,callback) => {
 
 userModel.getTipoPremios = (callback) => {
     try{
+      createConnection();
+      conectar();
       if (connection) {
       connection.query('SELECT * FROM tipopremios ORDER BY idPremio',
         (err, rows) => {
@@ -52,8 +68,10 @@ userModel.getTipoPremios = (callback) => {
 
   userModel.contarTipoPremios = (callback) => {
     try{
+      createConnection();
+      conectar();
       if (connection) {
-      connection.query('SELECT idPremio FROM tipopremio order by idPremio DESC LIMIT 1',
+      connection.query('SELECT Count(idPremio) as Premios FROM tipopremios',
         (err, rows) => {
           if (err) {
             throw err
@@ -92,6 +110,8 @@ userModel.insertTipoPremio = (  userData, callback) => {
 
   userModel.updateTipoPremio = (userData, callback) => {
     try{
+      createConnection();
+      conectar()
       if (connection) {
       const sql = `
         UPDATE tipopremio SET

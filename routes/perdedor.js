@@ -17,7 +17,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/perdedores/contar', (req, res) => {
+  app.get('/perdedoresContar', (req, res) => {
     UserModel.contarPerdedores((err, data) => {
       res.status(200).json(data);
     });

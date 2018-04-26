@@ -1,17 +1,31 @@
 const mysql = require('mysql');
 
-connection = mysql.createConnection({
-  host: 'sql165.main-hosting.eu',
-  user: 'u541737295_azu',
-  password: '12345678',
-  database: 'u541737295_lote',
-  port: 3306
-});
-
+var connection;
 let userModel = {};
+function createConnection(){
+  connection = mysql.createConnection({
+    host: 'sql165.main-hosting.eu',
+    user: 'u541737295_azu',
+    password: '12345678',
+    database: 'u541737295_lote',
+    port: 3306
+  });
+}
+
+function conectar(){
+  connection.connect(function(error){
+    if(error){
+      console.log(error);
+    }else{
+      console.log('Conexion correcta.');
+    }
+  });
+}
 
 userModel.getPremio = (id,callback) => {
     try{
+      createConnection();
+      conectar();
       if (connection) {
       connection.query('SELECT * from premio WHERE idPremio='+ connection.escape(id),
         (err, rows) => {
@@ -32,6 +46,8 @@ userModel.getPremio = (id,callback) => {
 
 userModel.getPremios = (callback) => {
     try{
+      createConnection();
+      conectar();
       if (connection) {
       connection.query('SELECT * FROM premios ORDER BY idPremio',
         (err, rows) => {
@@ -52,6 +68,8 @@ userModel.getPremios = (callback) => {
 
   userModel.contarPremios = (callback) => {
     try{
+      createConnection();
+      conectar();
       if (connection) {
       connection.query('SELECT idPremio FROM premio order by idPremio DESC LIMIT 1',
         (err, rows) => {
@@ -72,6 +90,8 @@ userModel.getPremios = (callback) => {
 
 userModel.insertPremio = (  userData, callback) => {
     try {
+      createConnection();
+      conectar();
       if (connection) {
         connection.query('INSERT INTO premio SET ?', userData,
           (err, result) => {
@@ -92,6 +112,8 @@ userModel.insertPremio = (  userData, callback) => {
 
   userModel.updatePremio = (userData, callback) => {
     try{
+      createConnection();
+      conectar();
       if (connection) {
       const sql = `
         UPDATE premio SET

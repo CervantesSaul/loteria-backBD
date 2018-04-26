@@ -81,6 +81,38 @@ module.exports = function (server) {
         }
         });
         db.end();
-    })
+    });
+
+    server.post('/usuario/userNameVerificar', (req, res) => {
+        var userName= req.body.userName;
+        var contraseña = req.body.contrasena;
+        user.createConnection();
+        user.conectar()
+        db.query('SELECT * FROM usuario WHERE userName = ?',[userName], function (error, results, fields) {
+        if (error) {
+        res.send({
+            "code":400,
+            "failed": error
+        })
+        }else{
+        
+        if(results.length >0){
+        
+            
+                res.status(400).send({
+                    message: "El userName ya existe"
+                    });
+            
+        }
+        else{
+            res.status(400).send({
+                message: "El userName estaDisponible"
+                
+                });
+        }
+        }
+        });
+        db.end();
+        });
 
 }

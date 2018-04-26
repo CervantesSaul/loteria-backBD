@@ -22,34 +22,14 @@ function conectar(){
   });
 }
 
-userModel.getUsuarios2 = (callback) => {
-  createConnection();
-  conectar();
-  if (connection) {
-    connection.query('SELECT * FROM usuario ORDER BY idUsuario',
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-        }
-        else {
-         
-          callback(null, rows);
-        }
-      }
-    )
-  }
-
-  connection.end();
-};
 
 
 
-
-userModel.getUsuario = (id,callback) => {
+userModel.getCartaUsuario = (id,callback) => {
     createConnection();
     conectar();
     if (connection) {
-      connection.query('SELECT * from usuario WHERE idUsuario='+ connection.escape(id),
+      connection.query('SELECT * from cartausuario WHERE idUsuario='+ connection.escape(id),
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -64,11 +44,49 @@ userModel.getUsuario = (id,callback) => {
     connection.end();
   };
 
-userModel.getUsuarios = (callback) => {
+  userModel.getCartaPartida = (id,callback) => {
+    createConnection();
+    conectar();
+    if (connection) {
+      connection.query('SELECT * from cartausuario WHERE idPartida='+ connection.escape(id),
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+          }
+          else {
+           
+            callback(null, rows);
+          }
+        }
+      )
+    }
+    connection.end();
+  };
+
+  userModel.getCartaCarta = (id,callback) => {
+    createConnection();
+    conectar();
+    if (connection) {
+      connection.query('SELECT * from cartausuario WHERE idCarta='+ connection.escape(id),
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+          }
+          else {
+           
+            callback(null, rows);
+          }
+        }
+      )
+    }
+    connection.end();
+  };
+
+userModel.getcartaUsuarios = (callback) => {
   createConnection();
   conectar();
     if (connection) {
-      connection.query('SELECT * FROM usuario ORDER BY idUsuario',
+      connection.query('SELECT * FROM cartausuario ORDER BY idPartida',
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -83,11 +101,11 @@ userModel.getUsuarios = (callback) => {
     connection.end();
   };
 
-  userModel.contarUsuarios = (callback) => {
+  userModel.contarCartaUsuario = (callback) => {
     createConnection();
     conectar();
       if (connection) {
-        connection.query('SELECT count(idUsuario) as Usuarios FROM usuario',
+        connection.query('SELECT count(idUsuario) as Usuarios FROM cartausuario',
           (err, rows) => {
             if (err) {
               console.log(err);
@@ -102,14 +120,14 @@ userModel.getUsuarios = (callback) => {
       connection.end();
     };
 
-userModel.insertUser = (  userData, callback) => {
+userModel.insertCartaUsuario = (  userData, callback) => {
 
     try {
       createConnection();
       conectar();
 
       if (connection) {
-        connection.query('INSERT INTO usuario SET ?', userData,
+        connection.query('INSERT INTO cartausuario SET ?', userData,
           (err, result) => {
             if (err) {
               console.log(err);
@@ -126,21 +144,16 @@ userModel.insertUser = (  userData, callback) => {
     }
   };
 
-  userModel.updateUsuario = (userData, callback) => {
+  userModel.updateCartaUsuario = (userData, callback) => {
     createConnection();
     conectar();
     if (connection) {
       const sql = `
-        UPDATE usuario SET
+        UPDATE cartausuario SET
   
-        userName = ${connection.escape(userData.userName)},
-        correo = ${connection.escape(userData.correo)},
-        genero = ${connection.escape(userData.genero)},
-        fechaNacimiento = ${connection.escape(userData.fechaNacimiento)},
-        estado = ${connection.escape(userData.estado)},
-        contraseña = ${connection.escape(userData.contraseña)}
+        idCarta = ${connection.escape(userData.idCarta)}
        
-        WHERE idUsuario = ${userData.idUsuario}`;
+        WHERE idUsuario = ${userData.idUsuario} AND idPartida = ${connection.escape(userData.idPartida)}`;
   
       connection.query(sql, function (err, result) {
         if (err) {

@@ -19,7 +19,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/premios/contar', (req, res) => {
+  app.get('/premiosContar', (req, res) => {
     UserModel.contarPremios((err, data) => {
       res.status(200).json(data);
     });

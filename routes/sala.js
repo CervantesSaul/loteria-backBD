@@ -17,7 +17,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/salas/contar', (req, res) => {
+  app.get('/salasContar', (req, res) => {
     UserModel.contarSalas((err, data) => {
       res.status(200).json(data);
     });

@@ -22,34 +22,12 @@ function conectar(){
   });
 }
 
-userModel.getUsuarios2 = (callback) => {
-  createConnection();
-  conectar();
-  if (connection) {
-    connection.query('SELECT * FROM usuario ORDER BY idUsuario',
-      (err, rows) => {
-        if (err) {
-          console.log(err);
-        }
-        else {
-         
-          callback(null, rows);
-        }
-      }
-    )
-  }
 
-  connection.end();
-};
-
-
-
-
-userModel.getUsuario = (id,callback) => {
+userModel.getGanadorU = (id,callback) => {
     createConnection();
     conectar();
     if (connection) {
-      connection.query('SELECT * from usuario WHERE idUsuario='+ connection.escape(id),
+      connection.query('SELECT * from ganadores WHERE idUsuario='+ connection.escape(id),
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -64,11 +42,30 @@ userModel.getUsuario = (id,callback) => {
     connection.end();
   };
 
-userModel.getUsuarios = (callback) => {
+  userModel.getGanadorP = (id,callback) => {
+    createConnection();
+    conectar();
+    if (connection) {
+      connection.query('SELECT * from ganadores WHERE idPartida='+ connection.escape(id),
+        (err, rows) => {
+          if (err) {
+            console.log(err);
+          }
+          else {
+           
+            callback(null, rows);
+          }
+        }
+      )
+    }
+    connection.end();
+  };
+
+userModel.getGanadores = (callback) => {
   createConnection();
   conectar();
     if (connection) {
-      connection.query('SELECT * FROM usuario ORDER BY idUsuario',
+      connection.query('SELECT * FROM ganadores ORDER BY idUsuario',
         (err, rows) => {
           if (err) {
             console.log(err);
@@ -83,11 +80,11 @@ userModel.getUsuarios = (callback) => {
     connection.end();
   };
 
-  userModel.contarUsuarios = (callback) => {
+  userModel.contarGanadores = (callback) => {
     createConnection();
     conectar();
       if (connection) {
-        connection.query('SELECT count(idUsuario) as Usuarios FROM usuario',
+        connection.query('SELECT count(*) as Ganadores FROM ganadores',
           (err, rows) => {
             if (err) {
               console.log(err);
@@ -102,14 +99,14 @@ userModel.getUsuarios = (callback) => {
       connection.end();
     };
 
-userModel.insertUser = (  userData, callback) => {
+userModel.insertGanador = (  userData, callback) => {
 
     try {
       createConnection();
       conectar();
 
       if (connection) {
-        connection.query('INSERT INTO usuario SET ?', userData,
+        connection.query('INSERT INTO ganadores SET ?', userData,
           (err, result) => {
             if (err) {
               console.log(err);
@@ -126,21 +123,19 @@ userModel.insertUser = (  userData, callback) => {
     }
   };
 
-  userModel.updateUsuario = (userData, callback) => {
+  userModel.updateGandor = (userData, callback) => {
     createConnection();
     conectar();
     if (connection) {
       const sql = `
-        UPDATE usuario SET
+        UPDATE ganadores SET
   
-        userName = ${connection.escape(userData.userName)},
-        correo = ${connection.escape(userData.correo)},
-        genero = ${connection.escape(userData.genero)},
-        fechaNacimiento = ${connection.escape(userData.fechaNacimiento)},
-        estado = ${connection.escape(userData.estado)},
-        contraseña = ${connection.escape(userData.contraseña)}
+        idPremio = ${connection.escape(userData.idPremio)},
+        idCarta = ${connection.escape(userData.idCarta)},
+        idBaraja = ${connection.escape(userData.idBaraja)},
+        monto = ${connection.escape(userData.monto)}
        
-        WHERE idUsuario = ${userData.idUsuario}`;
+        WHERE idUsuario = ${userData.idUsuario} AND idPartida = ${userData.idPartida}`;
   
       connection.query(sql, function (err, result) {
         if (err) {
