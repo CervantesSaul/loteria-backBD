@@ -31,6 +31,10 @@ require('./routes/sala')(app);
 require('./routes/premio')(app);
 require('./routes/perdedor')(app);
 require('./routes/partida')(app);
+require('./routes/Lobby')(app);
+require('./routes/ganador')(app);
+require('./routes/CartaUsuario')(app);
+require('./routes/carta')(app);
 
 //static files
 app.use(express.static(path.join(__dirname, 'public')));
