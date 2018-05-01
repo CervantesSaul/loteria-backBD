@@ -1,5 +1,7 @@
 const UserModel = require('../models/salas');
 
+
+
 module.exports = app => {
 
   app.get('/salas/:idSala', (req, res) => {
@@ -23,7 +25,7 @@ module.exports = app => {
     });
   });
 
-  app.post('/sala', (req, res) => {
+  app.post('/salas', (req, res) => {
     var userData = {
       idSala: req.body.idSala,
       nombreSala: req.body.nombreSala,
@@ -35,7 +37,7 @@ module.exports = app => {
    
     UserModel.insertSala(userData, (err, data) => {
     try {
-      if (data && data.insertId) {
+      if (data) {
         res.status(200).json({
           success: true,
           msg: "Inserted a new sala",
