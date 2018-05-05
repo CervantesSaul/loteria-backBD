@@ -13,7 +13,7 @@ module.exports = app => {
       });
   });
 
-  app.get('/salas', (req, res) => {
+  app.get('/getSalas', (req, res) => {
     UserModel.getSalas((err, data) => {
       res.status(200).json(data);
     });

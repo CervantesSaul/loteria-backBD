@@ -55,7 +55,6 @@ userModel.getSalas = (callback) => {
             throw err
           }
           else {
-           
             callback(null, rows);
           }
         }
