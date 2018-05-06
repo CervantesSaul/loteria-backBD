@@ -40,7 +40,7 @@ module.exports = app => {
       if (data) {
         res.status(200).json({
           success: true,
-          msg: "Inserted a new sala",
+          msg: "Sala insertada correctamente",
           data: data
         });
         // res.redirect('/users/' + data.insertId);

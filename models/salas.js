@@ -70,13 +70,12 @@ userModel.getSalas = (callback) => {
       createConnection();
       conectar();
       if (connection) {
-      connection.query('SELECT Count(idSalas) FROM sala order by idSala DESC LIMIT 1',
+      connection.query('SELECT Count(idSala) as Max FROM sala order by idSala DESC LIMIT 1',
         (err, rows) => {
           if (err) {
             throw err
           }
           else {
-           
             callback(null, rows);
           }
         }
